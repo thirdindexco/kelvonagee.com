@@ -61,7 +61,7 @@ export default function Reel() {
         onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
         controls
         playsInline
-        src="//res.cloudinary.com/dpad3bstn/video/upload/f_auto:video,q_auto/kelvonagee-reel"
+        src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
         className={cn(
           'fixed left-1/2 top-1/2 z-50 aspect-video max-w-[90vw] -translate-x-1/2 -translate-y-1/2 outline-none md:max-w-[80vw]',
           {

@@ -60,10 +60,10 @@ export default function RootLayout({
           <footer className="flex w-full items-center justify-between gap-y-4 p-2 pt-10 text-center text-xs text-black/30 md:p-4 md:pt-20">
             <div className="flex flex-col items-start gap-y-1">
               <div>&copy; Copyright 2012-{year}. Kelvon Agee.</div>
-              <div>
+              {/* <div>
                 dev/design by{' '}
                 <a href="https://hael.cc">michael ciccarelli</a>
-              </div>
+              </div> */}
             </div>
             <div className="flex gap-x-2">
               <div

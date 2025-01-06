@@ -34,11 +34,13 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
             }}
           />
         )}
-        <PhotoGrid
-          images={images}
-          lastViewedPhoto={lastViewedPhoto}
-          lastViewedPhotoRef={lastViewedPhotoRef}
-        />
+        {images && images.length > 0 && (
+          <PhotoGrid
+            images={images}
+            lastViewedPhoto={lastViewedPhoto}
+            lastViewedPhotoRef={lastViewedPhotoRef}
+          />
+        )}
       </div>
     </Layout>
   )
@@ -76,7 +78,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images: reducedResults,
+      images: JSON.parse(JSON.stringify(reducedResults)) || null,
     },
   }
 }
