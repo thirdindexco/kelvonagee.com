@@ -6,7 +6,7 @@ import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
 import { motion } from 'motion/react'
 
-export function Reel() {
+export function VideoReel() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [{ isPlaying, duration, currentTime }, setReel] =
     useAtom(reelPlayerAtom)

@@ -8,7 +8,7 @@ import {
   MorphingDialogContainer,
 } from '@/components/ui/morphing-dialog'
 import { XIcon } from 'lucide-react'
-import { Reel } from './reel'
+import { Reel } from './video-reel'
 import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
 
