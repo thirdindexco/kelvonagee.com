@@ -48,7 +48,7 @@ export function Photos() {
       initial="initial"
       animate="animate"
       variants={container}
-      className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
+      className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-2"
     >
       {images.map((image) => {
         const isLandscape = image.width > image.height

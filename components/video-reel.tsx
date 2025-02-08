@@ -77,35 +77,37 @@ export function VideoReel() {
   }
 
   const handleVideoClick = (
-    e: React.MouseEvent<HTMLVideoElement, MouseEvent>
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    e.stopPropagation()
-    if (videoRef.current && !isPlaying) {
+    if (!isPlaying) {
       toggleVideo()
     }
   }
 
-  const handleMaskClick = () => {
-    if (videoRef.current) {
-      toggleVideo()
-    }
-  }
+  // const handleMaskClick = () => {
+  //   if (videoRef.current) {
+  //     // toggleVideo()
+  //     videoRef.current.pause()
+  //     setReel({ duration, currentTime, isPlaying: false })
+  //   }
+  // }
 
   return (
     <>
-      {isPlaying && (
+      {/* {isPlaying && (
         <div
           className="fixed inset-0 z-30 bg-white/20 backdrop-blur-md"
-          onClick={handleMaskClick}
+          // onClick={handleMaskClick}
         />
-      )}
+      )} */}
+
       <motion.div
         layout
         className={cn(
           'relative cursor-pointer',
           isPlaying && 'fixed inset-0 z-40 flex items-center justify-center'
         )}
-        onClick={handleMaskClick}
+        onClick={handleVideoClick}
       >
         {!isPlaying && showText && (
           <div className="text-right caption pb-1">
@@ -124,7 +126,7 @@ export function VideoReel() {
           controls={isPlaying}
           poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
           src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-          onClick={(e) => handleVideoClick(e)}
+          // onClick={handleVideoClick}
           onLoadedMetadata={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
           onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
