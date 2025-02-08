@@ -1,87 +1,111 @@
 'use client'
-import { createRef, useEffect } from 'react'
-import { cn } from '~/utils/cn'
-import { useAtom } from 'jotai'
-import { reelPlayerAtom, reelRefAtom } from '~/store'
-import { useRouter } from 'next/router'
 
-export default function Reel() {
-  const localReelRef = createRef<HTMLVideoElement>()
-  const [reelRef, setReelRef] = useAtom(reelRefAtom)
+import { useEffect, useRef, useState } from 'react'
+import { cn, formatTime } from '@/lib/utils'
+import { useAtom } from 'jotai'
+import { reelPlayerAtom } from '@/state'
+import { motion } from 'motion/react'
+
+export function Reel() {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [{ isPlaying, duration, currentTime }, setReel] =
     useAtom(reelPlayerAtom)
-  const router = useRouter()
-  const isInCarouselMode = router.asPath.startsWith('/p')
+  const [showText, setShowText] = useState(false)
 
+  // Save video time before unmount
   useEffect(() => {
-    setReelRef(localReelRef?.current)
+    const video = videoRef.current
+
+    return () => {
+      if (video) {
+        // Store the current time before unmounting
+        localStorage.setItem('videoTime', video.currentTime.toString())
+      }
+    }
+  }, [])
+
+  // Restore video time on mount
+  useEffect(() => {
+    const video = videoRef.current
+    const savedTime = localStorage.getItem('videoTime')
+
+    if (video && savedTime) {
+      video.currentTime = parseFloat(savedTime)
+      setReel((prev) => ({
+        ...prev,
+        currentTime: parseFloat(savedTime),
+      }))
+    }
   }, [])
 
   useEffect(() => {
-    if (isPlaying) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
+    const timer = setTimeout(() => {
+      setShowText(!showText)
+    }, 500)
+
+    return () => clearTimeout(timer)
   }, [isPlaying])
 
-  const toggleVideo = () => {
-    setReel({ duration, currentTime, isPlaying: !isPlaying })
-    if (reelRef === null) return
-    if (isPlaying === true) {
-      reelRef.pause()
-    } else {
-      reelRef?.play()
-      reelRef.onended = function (e) {
-        setReel({ duration, currentTime, isPlaying: false })
-      }
-    }
-  }
-
   const handleLoadedMetadata = () => {
-    if (reelRef) {
-      setReel({ currentTime, isPlaying, duration: reelRef.duration })
+    if (videoRef.current) {
+      setReel({
+        currentTime,
+        isPlaying,
+        duration: videoRef.current.duration,
+      })
     }
   }
 
   const handleTimeUpdate = () => {
-    if (reelRef) {
-      setReel({ isPlaying, duration, currentTime: reelRef.currentTime })
+    if (videoRef.current) {
+      setReel({
+        isPlaying,
+        duration,
+        currentTime: videoRef.current.currentTime,
+      })
     }
   }
 
-  if (isInCarouselMode) return <></>
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      if (!isPlaying) {
+        videoRef.current.play()
+      }
+    }
+  }
 
   return (
-    <>
-      <video
-        ref={localReelRef}
+    <motion.div
+      layout
+      className={cn(
+        'relative cursor-pointer',
+        isPlaying && 'fixed inset-0 z-10 flex items-center justify-center'
+      )}
+      onClick={handleVideoClick}
+    >
+      {!isPlaying && showText && (
+        <div className="text-right caption pb-1">
+          Play reel — {formatTime(currentTime)} / {formatTime(duration)}
+        </div>
+      )}
+
+      <motion.video
+        layout
+        ref={videoRef}
+        className={cn(
+          'aspect-video outline-none',
+          isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+        )}
+        playsInline
+        controls={isPlaying}
+        poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
+        src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
         onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
-        controls
-        playsInline
-        src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-        className={cn(
-          'fixed left-1/2 top-1/2 z-50 aspect-video max-w-[90vw] -translate-x-1/2 -translate-y-1/2 outline-none md:max-w-[80vw]',
-          {
-            'pointer-events-none z-[-1] !opacity-0': !isPlaying,
-          }
-        )}
+        onPause={() => setReel({ duration, currentTime, isPlaying: false })}
+        onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
       />
-      {isPlaying && (
-        <div
-          onClick={() => toggleVideo()}
-          className={cn(
-            'fixed inset-0 z-30 bg-black bg-opacity-20 opacity-0 backdrop-blur-2xl transition-opacity',
-            {
-              'opacity-100': isPlaying,
-            }
-          )}
-        >
-          &nbsp;
-        </div>
-      )}
-    </>
+    </motion.div>
   )
 }

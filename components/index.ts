@@ -1,8 +1,0 @@
-export { default as Carousel } from './Carousel'
-export { default as Hero } from './Hero'
-export { default as Layout } from './Layout'
-export { default as Modal } from './Modal'
-export { default as Navbar } from './Navbar'
-export { default as PhotoGrid } from './PhotoGrid'
-export { default as Reel } from './Reel'
-export { default as SharedModal } from './SharedModal'
