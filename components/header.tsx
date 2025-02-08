@@ -5,15 +5,24 @@ import { motion } from 'motion/react'
 import { TextEffect } from '@/components/ui/text-effect'
 import Link from 'next/link'
 import { Dot } from 'lucide-react'
+import { useAtom } from 'jotai/react'
+import { reelPlayerAtom } from '@/state'
+import { cn } from '@/lib/utils'
 
 export function Header() {
+  const [{ isPlaying }, setReel] = useAtom(reelPlayerAtom)
   const pathname = usePathname()
   const isHome = pathname === '/'
   const isWork = pathname === '/work'
   const isInfo = pathname === '/info'
 
   return (
-    <header className="fixed top-0 flex justify-between items-start w-full px-2 md:px-4 z-50 mix-blend-difference text-white min-h-8">
+    <header
+      className={cn(
+        'fixed top-0 flex justify-between items-start w-full px-2 md:px-4 z-50 mix-blend-difference text-white min-h-8',
+        isPlaying && 'z-35'
+      )}
+    >
       <div className="flex-1">
         <Link
           href="/work"

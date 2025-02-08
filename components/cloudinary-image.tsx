@@ -8,6 +8,7 @@ interface CloudinaryImageProps {
   alt: string
   width: number
   height: number
+  className?: string
 }
 
 export function CloudinaryImage({
@@ -15,8 +16,9 @@ export function CloudinaryImage({
   alt,
   width,
   height,
+  className = '',
 }: CloudinaryImageProps) {
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
 
   return (
     <Image
@@ -26,13 +28,13 @@ export function CloudinaryImage({
       width={width}
       height={height}
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      placeholder="blur"
-      blurDataURL={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/w_50,e_blur:1000/${publicId}`}
-      className={cn(
-        'transition-all duration-300 ease-in-out',
-        isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0'
-      )}
-      onLoadingComplete={() => setIsLoading(false)}
+      className={cn('w-full h-auto', className)}
+      // className={cn(
+      //   'transition-all duration-300 ease-in-out',
+      //   isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',
+      //   className
+      // )}
+      // onLoadingComplete={() => setIsLoading(false)}
     />
   )
 }

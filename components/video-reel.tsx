@@ -66,46 +66,72 @@ export function VideoReel() {
     }
   }
 
-  const handleVideoClick = () => {
+  const toggleVideo = () => {
     if (videoRef.current) {
       if (!isPlaying) {
         videoRef.current.play()
+      } else {
+        videoRef.current.pause()
       }
     }
   }
 
-  return (
-    <motion.div
-      layout
-      className={cn(
-        'relative cursor-pointer',
-        isPlaying && 'fixed inset-0 z-10 flex items-center justify-center'
-      )}
-      onClick={handleVideoClick}
-    >
-      {!isPlaying && showText && (
-        <div className="text-right caption pb-1">
-          Play reel — {formatTime(currentTime)} / {formatTime(duration)}
-        </div>
-      )}
+  const handleVideoClick = (
+    e: React.MouseEvent<HTMLVideoElement, MouseEvent>
+  ) => {
+    e.stopPropagation()
+    if (videoRef.current && !isPlaying) {
+      toggleVideo()
+    }
+  }
 
-      <motion.video
+  const handleMaskClick = () => {
+    if (videoRef.current) {
+      toggleVideo()
+    }
+  }
+
+  return (
+    <>
+      {isPlaying && (
+        <div
+          className="fixed inset-0 z-30 bg-white/20 backdrop-blur-md"
+          onClick={handleMaskClick}
+        />
+      )}
+      <motion.div
         layout
-        ref={videoRef}
         className={cn(
-          'aspect-video outline-none',
-          isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+          'relative cursor-pointer',
+          isPlaying && 'fixed inset-0 z-40 flex items-center justify-center'
         )}
-        playsInline
-        controls={isPlaying}
-        poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
-        src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-        onLoadedMetadata={handleLoadedMetadata}
-        onTimeUpdate={handleTimeUpdate}
-        onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
-        onPause={() => setReel({ duration, currentTime, isPlaying: false })}
-        onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
-      />
-    </motion.div>
+        onClick={handleMaskClick}
+      >
+        {!isPlaying && showText && (
+          <div className="text-right caption pb-1">
+            Play reel — {formatTime(currentTime)} / {formatTime(duration)}
+          </div>
+        )}
+
+        <motion.video
+          layout="preserve-aspect"
+          ref={videoRef}
+          className={cn(
+            'aspect-video outline-none',
+            isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+          )}
+          playsInline
+          controls={isPlaying}
+          poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
+          src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
+          onClick={(e) => handleVideoClick(e)}
+          onLoadedMetadata={handleLoadedMetadata}
+          onTimeUpdate={handleTimeUpdate}
+          onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
+          onPause={() => setReel({ duration, currentTime, isPlaying: false })}
+          onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+        />
+      </motion.div>
+    </>
   )
 }

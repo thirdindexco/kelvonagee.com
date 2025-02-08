@@ -24,11 +24,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: 'black' }}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-screen font-[family-name:var(--font-geist-sans)] overflow-x-hidden">
+        <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
           <Header />
           {children}
         </div>

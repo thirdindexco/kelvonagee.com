@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 interface CloudinaryImage {
   public_id: string
   secure_url: string
+  width: number
+  height: number
 }
 
 export function useCloudinaryImages(folder: string) {
