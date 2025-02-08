@@ -8,7 +8,7 @@ import {
   MorphingDialogContainer,
 } from '@/components/ui/morphing-dialog'
 import { XIcon } from 'lucide-react'
-import { Reel } from './video-reel'
+import { VideoReel } from './video-reel'
 import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
 
@@ -37,9 +37,9 @@ export function MorphingDialogBasicImage() {
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
         <MorphingDialogContent className="relative">
-          <Reel />
+          <VideoReel />
           {/* {showPlayer ? (
-            <Reel />
+            <VideoReel />
           ) : (
             <MorphingDialogImage
               src="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,c_limit,w_1200,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
