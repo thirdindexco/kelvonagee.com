@@ -13,7 +13,7 @@
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "jotai": "^2.11.3",
-    "lucide-react": "^0.474.0",
+    "lucide-react": "^0.475.0",
     "motion": "^12.4.1",
     "next": "15.1.6",
     "react": "^19.0.0",
@@ -23,14 +23,13 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^20.17.17",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "@types/react-responsive-masonry": "^2.6.0",
-    "postcss": "^8",
-    "prop-types": "^15.8.1",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
   },
   "prettier": {
     "semi": false,
