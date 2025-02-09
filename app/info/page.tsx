@@ -41,9 +41,9 @@ const item = {
 export default function Info() {
   return (
     <main className="bg-black text-white pt-[52px] md:pt-[96px]">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-8">
         {/* Mobile: Text first, Headshot second */}
-        <div className="md:col-span-5 flex flex-col justify-between text-y-2 gap-y-4 order-1 md:order-2">
+        <div className="sm:col-span-3 md:col-span-5 flex flex-col justify-between text-y-2 gap-y-4 order-1 md:order-2">
           <div>
             <TextEffect
               per="word"
@@ -84,7 +84,7 @@ export default function Info() {
         </div>
 
         {/* Headshot container */}
-        <div className="w-full col-span-3 h-dvh mx-auto md:mx-0 md:h-[calc(100vh_-_96px_-_1rem)] relative order-2 md:order-1">
+        <div className="sm:col-span-5 md:col-span-3 md:h-[calc(100dvh_-_96px] md:mx-0 order-2 md:order-1 overflow-hidden">
           <Headshot />
         </div>
       </div>

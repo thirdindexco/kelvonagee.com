@@ -12,18 +12,6 @@ export function VideoReel() {
     useAtom(reelPlayerAtom)
   const [showText, setShowText] = useState(false)
 
-  // Save video time before unmount
-  useEffect(() => {
-    const video = videoRef.current
-
-    return () => {
-      if (video) {
-        // Store the current time before unmounting
-        localStorage.setItem('videoTime', video.currentTime.toString())
-      }
-    }
-  }, [])
-
   // Restore video time on mount
   useEffect(() => {
     const video = videoRef.current
@@ -35,6 +23,18 @@ export function VideoReel() {
         ...prev,
         currentTime: parseFloat(savedTime),
       }))
+    }
+  }, [])
+
+  // Save video time before unmount
+  useEffect(() => {
+    const video = videoRef.current
+
+    return () => {
+      if (video) {
+        // Store the current time before unmounting
+        localStorage.setItem('videoTime', video.currentTime.toString())
+      }
     }
   }, [])
 
@@ -59,9 +59,9 @@ export function VideoReel() {
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setReel({
+        currentTime: videoRef.current.currentTime,
         isPlaying,
         duration,
-        currentTime: videoRef.current.currentTime,
       })
     }
   }
@@ -76,31 +76,23 @@ export function VideoReel() {
     }
   }
 
-  const handleVideoClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    if (!isPlaying) {
-      toggleVideo()
+  const handleMaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (videoRef.current) {
+      videoRef.current.pause()
     }
   }
 
-  // const handleMaskClick = () => {
-  //   if (videoRef.current) {
-  //     // toggleVideo()
-  //     videoRef.current.pause()
-  //     setReel({ duration, currentTime, isPlaying: false })
-  //   }
-  // }
+  const handleVideoClick = (e: any) => {
+    e.preventDefault()
+    if (videoRef.current) {
+      if (!isPlaying) {
+        videoRef.current.play()
+      }
+    }
+  }
 
   return (
     <>
-      {/* {isPlaying && (
-        <div
-          className="fixed inset-0 z-30 bg-white/20 backdrop-blur-md"
-          // onClick={handleMaskClick}
-        />
-      )} */}
-
       <motion.div
         layout
         className={cn(
@@ -109,6 +101,20 @@ export function VideoReel() {
         )}
         onClick={handleVideoClick}
       >
+        {isPlaying && (
+          <motion.div
+            onClick={handleMaskClick}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.3,
+              ease: 'easeOut',
+            }}
+            className="fixed inset-0 z-30 bg-black/10 backdrop-blur-md"
+          />
+        )}
+
         {!isPlaying && showText && (
           <div className="text-right caption pb-1">
             Play reel — {formatTime(currentTime)} / {formatTime(duration)}
@@ -119,19 +125,19 @@ export function VideoReel() {
           layout="preserve-aspect"
           ref={videoRef}
           className={cn(
-            'aspect-video outline-none',
+            'aspect-video outline-none z-50',
             isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
           )}
           playsInline
           controls={isPlaying}
           poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
           src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-          // onClick={handleVideoClick}
           onLoadedMetadata={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
           onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
           onPause={() => setReel({ duration, currentTime, isPlaying: false })}
           onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+          //onClick={handleVideoClick}
         />
       </motion.div>
     </>

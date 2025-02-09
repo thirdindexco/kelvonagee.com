@@ -19,8 +19,8 @@ export function Header() {
   return (
     <header
       className={cn(
-        'fixed top-0 flex justify-between items-start w-full px-2 md:px-4 z-50 mix-blend-difference text-white min-h-8',
-        isPlaying && 'z-35'
+        'fixed top-0 flex justify-between items-start w-full px-2 md:px-4 z-30 text-black min-h-8',
+        { 'mix-blend-difference text-white': !isPlaying }
       )}
     >
       <div className="flex-1">

@@ -48,29 +48,28 @@ export function Photos() {
       initial="initial"
       animate="animate"
       variants={container}
-      className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-2"
+      className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
     >
       {images.map((image) => {
         const isLandscape = image.width > image.height
-        const aspectRatio = image.width / image.height
 
         return (
           <motion.div
             key={image.public_id}
             variants={item}
-            className="break-inside-avoid-column w-full inline-block"
+            className="break-inside-avoid mb-4"
           >
             <div
-              className="relative w-full"
-              style={{ paddingBottom: `${(1 / aspectRatio) * 100}%` }}
+              className={cn(
+                'relative w-full',
+                isLandscape ? 'aspect-video' : 'aspect-[3/4]'
+              )}
             >
               <CloudinaryImage
                 alt=""
                 publicId={image.public_id}
-                width={isLandscape ? 1920 : 1080}
-                height={Math.round(
-                  isLandscape ? 1920 / aspectRatio : 1080 * aspectRatio
-                )}
+                width={isLandscape ? 1200 : 800}
+                height={isLandscape ? 675 : 1067}
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
