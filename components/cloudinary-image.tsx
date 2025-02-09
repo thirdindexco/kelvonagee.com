@@ -18,7 +18,7 @@ export function CloudinaryImage({
   height,
   className = '',
 }: CloudinaryImageProps) {
-  // const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <Image
@@ -28,13 +28,12 @@ export function CloudinaryImage({
       width={width}
       height={height}
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      className={cn('w-full h-auto', className)}
-      // className={cn(
-      //   'transition-all duration-300 ease-in-out',
-      //   isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',
-      //   className
-      // )}
-      // onLoadingComplete={() => setIsLoading(false)}
+      className={cn(
+        'transition-all duration-300 ease-in-out',
+        isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',
+        className
+      )}
+      onLoadingComplete={() => setIsLoading(false)}
     />
   )
 }

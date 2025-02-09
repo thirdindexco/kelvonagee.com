@@ -2,9 +2,7 @@
 
 import { CloudinaryImage } from '@/components/cloudinary-image'
 import { useCloudinaryImages } from '@/hooks/useCloudinaryImages'
-import { AnimatedGroup } from '@/components/ui/animated-group'
 import { cn } from '@/lib/utils'
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 import { motion } from 'motion/react'
 
 const container = {
@@ -30,6 +28,19 @@ const item = {
   },
 }
 
+// Convert decimal to fraction (e.g., 1.5 becomes "3/2")
+const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a)
+
+const fractionize = (decimal: number) => {
+  const precision = 1000
+  const numerator = decimal * precision
+  const denominator = precision
+  const divisor = gcd(numerator, denominator)
+  return `${Math.round(numerator / divisor)}/${Math.round(
+    denominator / divisor
+  )}`
+}
+
 export function Photos() {
   const { images, isLoading, error } = useCloudinaryImages('kelvonagee.com')
 
@@ -52,6 +63,7 @@ export function Photos() {
     >
       {images.map((image) => {
         const isLandscape = image.width > image.height
+        const aspectRatio = fractionize(image.width / image.height)
 
         return (
           <motion.div
@@ -59,18 +71,12 @@ export function Photos() {
             variants={item}
             className="break-inside-avoid mb-4"
           >
-            <div
-              className={cn(
-                'relative w-full',
-                isLandscape ? 'aspect-video' : 'aspect-[3/4]'
-              )}
-            >
+            <div className={cn('relative w-full', `aspect-[${aspectRatio}]`)}>
               <CloudinaryImage
                 alt=""
                 publicId={image.public_id}
                 width={isLandscape ? 1200 : 800}
                 height={isLandscape ? 675 : 1067}
-                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
           </motion.div>
