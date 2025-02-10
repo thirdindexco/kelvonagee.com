@@ -68,13 +68,21 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground w-full;
   }
   main {
     @apply min-h-screen bg-white text-black transition-colors duration-100 px-2 md:px-4 pb-2 md:pb-4;
   }
   p {
-    @apply text-base md:text-2xl font-black max-w-2xl leading-tight tracking-tight text-balance;
+    @apply text-sm md:text-base;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-base md:text-2xl font-black leading-tight tracking-tight;
   }
   .caption {
     @apply text-[11px] font-mono tracking-wide uppercase;

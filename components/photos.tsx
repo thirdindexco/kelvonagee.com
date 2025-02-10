@@ -59,7 +59,7 @@ export function Photos() {
       initial="initial"
       animate="animate"
       variants={container}
-      className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
+      className="columns-1 sm:columns-2 lg:columns-3 gap-2 space-y-2 md:gap-4 md:space-y-4"
     >
       {images.map((image) => {
         const isLandscape = image.width > image.height
@@ -69,7 +69,7 @@ export function Photos() {
           <motion.div
             key={image.public_id}
             variants={item}
-            className="break-inside-avoid mb-4"
+            className="break-inside-avoid"
           >
             <div className={cn('relative w-full', `aspect-[${aspectRatio}]`)}>
               <CloudinaryImage

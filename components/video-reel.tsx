@@ -5,12 +5,14 @@ import { cn, formatTime } from '@/lib/utils'
 import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
 import { motion } from 'motion/react'
+import useIsMobile from '@/hooks/useIsMobile'
 
 export function VideoReel() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [{ isPlaying, duration, currentTime }, setReel] =
     useAtom(reelPlayerAtom)
   const [showText, setShowText] = useState(false)
+  const isMobile = useIsMobile()
 
   // Restore video time on mount
   useEffect(() => {
@@ -93,53 +95,88 @@ export function VideoReel() {
 
   return (
     <>
-      <motion.div
-        layout
-        className={cn(
-          'relative cursor-pointer',
-          isPlaying && 'fixed inset-0 z-40 flex items-center justify-center'
-        )}
-        onClick={handleVideoClick}
-      >
-        {isPlaying && (
-          <motion.div
-            onClick={handleMaskClick}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.3,
-              ease: 'easeOut',
-            }}
-            className="fixed inset-0 z-30 bg-black/10 backdrop-blur-md"
-          />
-        )}
-
-        {!isPlaying && showText && (
-          <div className="text-right caption pb-1">
-            Play reel — {formatTime(currentTime)} / {formatTime(duration)}
+      {isMobile ? (
+        <div className="flex flex-col gap-y-1 relative">
+          {/* {!isPlaying && (
+            <div
+              className="absolute inset-0 w-full h-full"
+              onClick={toggleVideo}
+            />
+          )} */}
+          <div
+            className="text-right caption cursor-pointer"
+            onClick={toggleVideo}
+          >
+            {isPlaying ? 'Pause' : 'Play'} reel — {formatTime(currentTime)} /{' '}
+            {formatTime(duration)}
           </div>
-        )}
-
-        <motion.video
-          layout="preserve-aspect"
-          ref={videoRef}
+          <video
+            ref={videoRef}
+            className="aspect-video outline-none z-50 w-full"
+            playsInline
+            controls={isPlaying}
+            poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
+            src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
+            onTouchStart={toggleVideo}
+            onLoadedMetadata={handleLoadedMetadata}
+            onTimeUpdate={handleTimeUpdate}
+            onPlaying={() =>
+              setReel({ duration, currentTime, isPlaying: true })
+            }
+            onPause={() => setReel({ duration, currentTime, isPlaying: false })}
+            onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+          />
+        </div>
+      ) : (
+        <motion.div
+          layout
           className={cn(
-            'aspect-video outline-none z-50',
-            isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+            'relative cursor-pointer',
+            isPlaying && 'fixed inset-0 z-40 flex items-center justify-center'
           )}
-          playsInline
-          controls={isPlaying}
-          poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
-          src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-          onLoadedMetadata={handleLoadedMetadata}
-          onTimeUpdate={handleTimeUpdate}
-          onPlaying={() => setReel({ duration, currentTime, isPlaying: true })}
-          onPause={() => setReel({ duration, currentTime, isPlaying: false })}
-          onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
-          //onClick={handleVideoClick}
-        />
-      </motion.div>
+          onClick={handleVideoClick}
+        >
+          {isPlaying && (
+            <motion.div
+              onClick={handleMaskClick}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: 0.3,
+                duration: 0.3,
+                ease: 'easeOut',
+              }}
+              className="fixed inset-0 z-30 bg-black/10 backdrop-blur-md"
+            />
+          )}
+
+          {!isPlaying && showText && (
+            <div className="text-right caption pb-1">
+              Play reel — {formatTime(currentTime)} / {formatTime(duration)}
+            </div>
+          )}
+
+          <motion.video
+            layout="preserve-aspect"
+            ref={videoRef}
+            className={cn(
+              'aspect-video outline-none z-50',
+              isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+            )}
+            playsInline
+            controls={isPlaying}
+            poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
+            src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
+            onLoadedMetadata={handleLoadedMetadata}
+            onTimeUpdate={handleTimeUpdate}
+            onPlaying={() =>
+              setReel({ duration, currentTime, isPlaying: true })
+            }
+            onPause={() => setReel({ duration, currentTime, isPlaying: false })}
+            onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+          />
+        </motion.div>
+      )}
     </>
   )
 }
