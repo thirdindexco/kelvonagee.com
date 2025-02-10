@@ -43,14 +43,14 @@ export default function Info() {
     <main className="bg-black text-white pt-[52px] md:pt-[96px]">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-8">
         {/* Headshot container */}
-        <div className="sm:col-span-3 md:col-span-3 md:h-[calc(100dvh_-_96px_-_1rem)] overflow-hidden order-2 md:order-1">
+        <div className="sm:col-span-4 md:col-span-3 md:h-[calc(100dvh_-_96px_-_1rem)] overflow-hidden order-2 md:order-1">
           <Headshot />
         </div>
 
         {/* Text content */}
-        <div className="sm:col-span-5 flex flex-col justify-between order-1 md:order-2 gap-4">
-          <div className="flex flex-col gap-y-8 md:pt-20 lg:pt-40">
-            <h2 className="indent-20 md:indent-44 text-pretty md:text-4xl">
+        <div className="sm:col-span-4 md:col-span-5 flex flex-col justify-between order-1 md:order-2 gap-4">
+          <div className="flex flex-col gap-y-8">
+            <h2 className="indent-20 md:indent-40">
               <TextEffect
                 per="line"
                 as="span"
@@ -58,45 +58,33 @@ export default function Info() {
                 speedReveal={3}
                 speedSegment={0.6}
               >
-                I’m a Producer, Director, and Director of Photography with over
-                a decade of experience capturing authentic stories through a
-                cinematic lens.
+                I’m a Producer, Director, and Director of Photography (DP) with
+                over a decade of experience capturing authentic stories through
+                a cinematic lens. My work includes projects like Deadliest
+                Catch, Life Below Zero, and World’s Toughest Race: Eco-Challenge
+                Fiji, totaling over 200 produced and 130 directed hours of
+                prime-time programming. With five Primetime Emmy nominations for
+                Cinematography, I bring a sharp eye for storytelling to every
+                project.
               </TextEffect>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2>
               <TextEffect
                 per="line"
-                as="p"
+                as="span"
                 preset="fade-in-blur"
                 speedReveal={3}
-                speedSegment={0.4}
+                speedSegment={0.6}
               >
-                My work spans documentary projects like Deadliest Catch, Life
-                Below Zero, and World’s Toughest Race: Eco-Challenge Fiji,
-                totaling over 200 produced and 130 directed hours of prime-time
-                programming. I’ve captured extreme environments, compelling
-                human stories, and high-stakes moments, earning five Primetime
-                Emmy nominations for Cinematography. With a deep passion for
-                visual storytelling, I strive to craft narratives that are both
-                cinematic and authentic.
+                Beyond documentaries, I’ve filmed campaigns and branded content
+                for clients like NBA legend Chris Paul, Grammy-winning artist
+                Seal (Leica), Cotrini Beauty, The Dick Butkus Award (Big 10
+                Network), and Logitech. I’m passionate about telling impactful
+                stories and thrive on creativity, problem-solving, and
+                collaboration to produce meaningful, dynamic content—while
+                making the process as engaging as the final product.
               </TextEffect>
-              <TextEffect
-                per="line"
-                as="p"
-                preset="fade-in-blur"
-                speedReveal={3}
-                speedSegment={0.2}
-              >
-                Beyond documentaries, I’ve shot campaigns and branded content
-                for high-profile clients, including NBA legend Chris Paul,
-                Grammy-winning artist Seal (Leica), Cotrini Beauty, The Dick
-                Butkus Award (Big 10 Network), and Logitech. Whether working
-                with global brands or individual visionaries, I bring
-                creativity, problem-solving, and collaboration to every
-                project—ensuring the process is as engaging as the final
-                product.
-              </TextEffect>
-            </div>
+            </h2>
           </div>
 
           <motion.ul

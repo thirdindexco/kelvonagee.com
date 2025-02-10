@@ -2,18 +2,8 @@
 
 import { CloudinaryImage } from '@/components/cloudinary-image'
 import { useCloudinaryImages } from '@/hooks/useCloudinaryImages'
-import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
-
-const container = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 
 const item = {
   initial: { filter: 'blur(4px)', y: 20, opacity: 0 },
@@ -26,19 +16,6 @@ const item = {
       ease: [0.25, 0.25, 0, 1],
     },
   },
-}
-
-// Convert decimal to fraction (e.g., 1.5 becomes "3/2")
-const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a)
-
-const fractionize = (decimal: number) => {
-  const precision = 1000
-  const numerator = decimal * precision
-  const denominator = precision
-  const divisor = gcd(numerator, denominator)
-  return `${Math.round(numerator / divisor)}/${Math.round(
-    denominator / divisor
-  )}`
 }
 
 export function Photos() {
@@ -55,33 +32,28 @@ export function Photos() {
   }
 
   return (
-    <motion.div
-      initial="initial"
-      animate="animate"
-      variants={container}
-      className="columns-1 sm:columns-2 lg:columns-3 gap-2 space-y-2 md:gap-4 md:space-y-4"
-    >
-      {images.map((image) => {
-        const isLandscape = image.width > image.height
-        const aspectRatio = fractionize(image.width / image.height)
+    <ResponsiveMasonry columnsCountBreakPoints={{ 639: 1, 640: 2, 768: 3 }}>
+      <Masonry>
+        {images.map((image) => {
+          const isLandscape = image.width > image.height
 
-        return (
-          <motion.div
-            key={image.public_id}
-            variants={item}
-            className="break-inside-avoid"
-          >
-            <div className={cn('relative w-full', `aspect-[${aspectRatio}]`)}>
+          return (
+            <motion.div
+              key={image.public_id}
+              variants={item}
+              className="break-inside-avoid w-full inline-block"
+            >
               <CloudinaryImage
                 alt=""
                 publicId={image.public_id}
-                width={isLandscape ? 1200 : 800}
-                height={isLandscape ? 675 : 1067}
+                width={1200}
+                height={isLandscape ? 675 : 900}
+                className="w-full h-auto"
               />
-            </div>
-          </motion.div>
-        )
-      })}
-    </motion.div>
+            </motion.div>
+          )
+        })}
+      </Masonry>
+    </ResponsiveMasonry>
   )
 }

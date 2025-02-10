@@ -117,7 +117,7 @@ export function VideoReel() {
             controls={isPlaying}
             poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
             src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-            onTouchStart={toggleVideo}
+            onTouchStart={() => !isPlaying && toggleVideo()}
             onLoadedMetadata={handleLoadedMetadata}
             onTimeUpdate={handleTimeUpdate}
             onPlaying={() =>
