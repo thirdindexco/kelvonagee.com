@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import { cn, formatTime } from '@/lib/utils'
 import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
-import { motion } from 'motion/react'
+import { m, motion } from 'motion/react'
 import useIsMobile from '@/hooks/useIsMobile'
 
 export function VideoReel() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [{ isPlaying, duration, currentTime }, setReel] =
-    useAtom(reelPlayerAtom)
+  const [{ mode, duration, currentTime }, setReel] = useAtom(reelPlayerAtom)
   const [showText, setShowText] = useState(false)
   const isMobile = useIsMobile()
 
@@ -46,13 +45,13 @@ export function VideoReel() {
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [isPlaying])
+  }, [mode])
 
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setReel({
         currentTime,
-        isPlaying,
+        mode,
         duration: videoRef.current.duration,
       })
     }
@@ -62,7 +61,7 @@ export function VideoReel() {
     if (videoRef.current) {
       setReel({
         currentTime: videoRef.current.currentTime,
-        isPlaying,
+        mode,
         duration,
       })
     }
@@ -70,7 +69,7 @@ export function VideoReel() {
 
   const toggleVideo = () => {
     if (videoRef.current) {
-      if (!isPlaying) {
+      if (mode === 'idle' || mode === 'paused') {
         videoRef.current.play()
       } else {
         videoRef.current.pause()
@@ -81,13 +80,13 @@ export function VideoReel() {
   const handleMaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (videoRef.current) {
       videoRef.current.pause()
+      setReel({ duration, currentTime, mode: 'idle' })
     }
   }
 
-  const handleVideoClick = (e: any) => {
-    e.preventDefault()
+  const handleVideoClick = () => {
     if (videoRef.current) {
-      if (!isPlaying) {
+      if (mode === 'idle' || mode === 'paused') {
         videoRef.current.play()
       }
     }
@@ -96,29 +95,31 @@ export function VideoReel() {
   return (
     <>
       {isMobile ? (
-        <div className="flex flex-col gap-y-1 relative">
+        <div
+          className="flex flex-col gap-y-1 relative"
+          onClick={handleVideoClick}
+        >
           <div
             className="text-right caption cursor-pointer"
             onClick={toggleVideo}
           >
-            {isPlaying ? 'Pause' : 'Play'} reel — {formatTime(currentTime)} /{' '}
-            {formatTime(duration)}
+            {mode === 'playing' ? 'Pause' : 'Play'} reel —{' '}
+            {formatTime(currentTime)} / {formatTime(duration)}
           </div>
           <video
             ref={videoRef}
             className="aspect-video outline-none z-50 w-full"
             playsInline
-            controls={isPlaying}
+            controls={mode === 'playing'}
             poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
             src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
-            onTouchStart={() => !isPlaying && toggleVideo()}
             onLoadedMetadata={handleLoadedMetadata}
             onTimeUpdate={handleTimeUpdate}
             onPlaying={() =>
-              setReel({ duration, currentTime, isPlaying: true })
+              setReel({ duration, currentTime, mode: 'playing' })
             }
-            onPause={() => setReel({ duration, currentTime, isPlaying: false })}
-            onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+            onPause={() => setReel({ duration, currentTime, mode: 'paused' })}
+            onEnded={() => setReel({ duration, currentTime, mode: 'idle' })}
           />
         </div>
       ) : (
@@ -126,11 +127,12 @@ export function VideoReel() {
           layout
           className={cn(
             'relative cursor-pointer',
-            isPlaying && 'fixed inset-0 z-40 flex items-center justify-center'
+            mode != 'idle' &&
+              'fixed inset-0 z-40 flex items-center justify-center'
           )}
           onClick={handleVideoClick}
         >
-          {isPlaying && (
+          {mode != 'idle' && (
             <motion.div
               onClick={handleMaskClick}
               initial={{ opacity: 0 }}
@@ -144,7 +146,7 @@ export function VideoReel() {
             />
           )}
 
-          {!isPlaying && showText && (
+          {mode !== 'playing' && showText && (
             <div className="text-right caption pb-1">
               Play reel — {formatTime(currentTime)} / {formatTime(duration)}
             </div>
@@ -155,19 +157,19 @@ export function VideoReel() {
             ref={videoRef}
             className={cn(
               'aspect-video outline-none z-50',
-              isPlaying ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
+              mode === 'playing' ? 'max-w-[90vw] md:max-w-[80vw]' : 'w-full'
             )}
             playsInline
-            controls={isPlaying}
+            controls={mode === 'playing'}
             poster="//res.cloudinary.com/dxcvsjlxr/image/upload/f_auto,ar_16:9,c_fill,w_1220,q_auto/nfreyhnd41z7lzuwddas_vtvhfh"
             src="//res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl"
             onLoadedMetadata={handleLoadedMetadata}
             onTimeUpdate={handleTimeUpdate}
             onPlaying={() =>
-              setReel({ duration, currentTime, isPlaying: true })
+              setReel({ duration, currentTime, mode: 'playing' })
             }
-            onPause={() => setReel({ duration, currentTime, isPlaying: false })}
-            onEnded={() => setReel({ duration, currentTime, isPlaying: false })}
+            onPause={() => setReel({ duration, mode, currentTime })}
+            onEnded={() => setReel({ duration, currentTime, mode: 'idle' })}
           />
         </motion.div>
       )}

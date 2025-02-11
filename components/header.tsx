@@ -10,7 +10,7 @@ import { reelPlayerAtom } from '@/state'
 import { cn } from '@/lib/utils'
 
 export function Header() {
-  const [{ isPlaying }, setReel] = useAtom(reelPlayerAtom)
+  const [{ mode }, setReel] = useAtom(reelPlayerAtom)
   const pathname = usePathname()
   const isHome = pathname === '/'
   const isWork = pathname === '/work'
@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header
       className={cn('fixed top-0 z-30 text-black w-full', {
-        'mix-blend-difference text-white': !isPlaying,
+        'mix-blend-difference text-white': mode !== 'playing',
       })}
     >
       <div className="relative w-full min-h-8 flex items-center">
