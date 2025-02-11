@@ -13,8 +13,7 @@ import { useAtom } from 'jotai'
 import { reelPlayerAtom } from '@/state'
 
 export function MorphingDialogBasicImage() {
-  const [{ isPlaying, duration, currentTime }, setReel] =
-    useAtom(reelPlayerAtom)
+  const [{ mode, duration, currentTime }, setReel] = useAtom(reelPlayerAtom)
 
   // const [showPlayer, setShowPlayer] = useState(false)
 
