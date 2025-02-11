@@ -97,12 +97,6 @@ export function VideoReel() {
     <>
       {isMobile ? (
         <div className="flex flex-col gap-y-1 relative">
-          {/* {!isPlaying && (
-            <div
-              className="absolute inset-0 w-full h-full"
-              onClick={toggleVideo}
-            />
-          )} */}
           <div
             className="text-right caption cursor-pointer"
             onClick={toggleVideo}

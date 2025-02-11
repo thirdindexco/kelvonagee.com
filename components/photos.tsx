@@ -32,7 +32,10 @@ export function Photos() {
   }
 
   return (
-    <ResponsiveMasonry columnsCountBreakPoints={{ 639: 1, 640: 2, 768: 3 }}>
+    <ResponsiveMasonry
+      columnsCountBreakPoints={{ 639: 1, 640: 2, 768: 3 }}
+      className="w-full overflow-x-hidden"
+    >
       <Masonry>
         {images.map((image) => {
           const isLandscape = image.width > image.height
