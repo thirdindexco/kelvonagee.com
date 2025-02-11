@@ -32,10 +32,7 @@ export function Header() {
                 y: isHome || isInfo ? 0 : 10,
               }}
               transition={{ duration: 0.1, easing: 'ease-in-out' }}
-              className={cn(
-                'text-2xl leading-none font-black text-center uppercase tracking-tighter whitespace-nowrap'
-                //{ 'mt-0': isWork }
-              )}
+              className="text-2xl leading-none font-black text-center uppercase tracking-tighter whitespace-nowrap"
             >
               Kelvon Agee
             </motion.div>
@@ -53,7 +50,6 @@ export function Header() {
               <TextEffect
                 per="word"
                 as="h2"
-                // preset="blur"
                 preset="fade-in-blur"
                 speedReveal={3}
                 speedSegment={0.6}

@@ -15,11 +15,19 @@ export function Headshot() {
     <motion.div
       className={cn(
         'relative w-full will-change-transform',
-        'aspect-[5/8] md:h-[calc(100dvh_-_96px_-_1rem)]' // Height calculation for desktop
+        'aspect-[5/8] md:h-[calc(100dvh_-_96px_-_1rem)]'
       )}
-      initial={{ opacity: 0, scale: 1.2 }}
-      animate={isLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.2 }}
-      transition={{ duration: 1, ease: 'easeInOut', delay: 0.15 }}
+      initial={{ opacity: 0, scale: 1.2, filter: 'blur(8px)' }}
+      animate={
+        isLoaded
+          ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
+          : { opacity: 0, scale: 1.2, filter: 'blur(8px)' }
+      }
+      transition={{
+        duration: 0.8,
+        ease: [0.25, 0.25, 0, 1],
+        delay: 0.15,
+      }}
     >
       <img
         className="object-cover w-full h-full"
