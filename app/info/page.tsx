@@ -2,7 +2,6 @@
 
 import { Headshot } from '@/components/headshot'
 import { TextEffect } from '@/components/ui/text-effect'
-import { delay } from 'motion'
 import { motion } from 'motion/react'
 
 const links = [
@@ -23,6 +22,30 @@ const links = [
   },
 ]
 
+const container = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.8, // Delay after text animation
+    },
+  },
+}
+
+const item = {
+  initial: { y: 20, opacity: 0, filter: 'blur(4px)' },
+  animate: {
+    y: 0,
+    opacity: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.4,
+      ease: [0.25, 0.25, 0, 1],
+    },
+  },
+}
+
 export default function Info() {
   return (
     <main className="bg-black text-white pt-[52px] md:pt-[96px]">
@@ -37,7 +60,7 @@ export default function Info() {
           <div className="flex flex-col gap-y-8">
             <TextEffect
               className="display"
-              per="word"
+              per="line"
               as="span"
               preset="fade-in-blur"
               speedReveal={4}
@@ -55,18 +78,27 @@ export default function Info() {
             </TextEffect>
           </div>
 
-          <ul className="m-0 flex flex-col gap-y-1">
+          <motion.ul
+            variants={container}
+            initial="initial"
+            animate="animate"
+            className="m-0 flex flex-col gap-y-1"
+          >
             {links.map(({ text, href }) => (
-              <li key={href} className="text-base font-black leading-none">
+              <motion.li
+                key={href}
+                variants={item}
+                className="text-base font-black leading-none"
+              >
                 <a
                   className="underline hover:no-underline hover:text-white/80"
                   href={href}
                 >
                   {text}
                 </a>
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         </div>
       </div>
     </main>
