@@ -13,7 +13,7 @@ export function Header() {
   const [{ mode }, setReel] = useAtom(reelPlayerAtom)
   const pathname = usePathname()
   const isHome = pathname === '/'
-  const isWork = pathname === '/work'
+  const isPortfolio = pathname === '/portfolio'
   const isInfo = pathname === '/info'
 
   return (
@@ -61,15 +61,15 @@ export function Header() {
         </div>
         <div className="flex items-center justify-between w-full min-h-8 pt-2 px-2 md:px-4">
           <Link
-            href="/work"
+            href="/portfolio"
             className={cn(
               'text-sm md:text-2xl font-black flex hover:text-white text-muted-foreground transition-colors',
               {
-                'text-white': isWork,
+                'text-white': isPortfolio,
               }
             )}
           >
-            WORK
+            PORTFOLIO
           </Link>
 
           <Link
