@@ -9,25 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "cloudinary": "^2.5.1",
+    "@tailwindcss/postcss": "^4.3.0",
+    "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",
-    "jotai": "^2.11.3",
-    "lucide-react": "^0.475.0",
-    "masonic": "^4.0.1",
-    "motion": "^12.4.1",
-    "next": "15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1",
+    "jotai": "^2.20.0",
+    "lucide-react": "^1.14.0",
+    "masonic": "^4.1.0",
+    "motion": "^12.38.0",
+    "next": "16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20.17.17",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "postcss": "^8.5.1",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "@types/node": "^25.7.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3"
   },
   "prettier": {
     "semi": false,

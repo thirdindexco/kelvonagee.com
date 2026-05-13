@@ -9,6 +9,7 @@ interface CloudinaryImageProps {
   width: number
   height: number
   className?: string
+  sizes?: string
 }
 
 export function CloudinaryImage({
@@ -17,6 +18,7 @@ export function CloudinaryImage({
   width,
   height,
   className = '',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
 }: CloudinaryImageProps) {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -27,7 +29,7 @@ export function CloudinaryImage({
       alt={alt}
       width={width}
       height={height}
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      sizes={sizes}
       className={cn(
         'transition-all duration-300 ease-in-out',
         isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',

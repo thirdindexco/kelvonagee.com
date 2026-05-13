@@ -13,7 +13,7 @@ export function Header() {
   const [{ mode }, setReel] = useAtom(reelPlayerAtom)
   const pathname = usePathname()
   const isHome = pathname === '/'
-  const isPortfolio = pathname === '/portfolio'
+  const isReel = pathname === '/reel'
   const isInfo = pathname === '/info'
 
   return (
@@ -28,10 +28,10 @@ export function Header() {
             <motion.div
               initial={{ fontSize: '24px', y: 0 }}
               animate={{
-                fontSize: isHome || isInfo ? '96px' : '24px',
-                y: isHome || isInfo ? 0 : 10,
+                fontSize: isReel || isInfo ? '96px' : '24px',
+                y: isReel || isInfo ? 0 : 10,
               }}
-              transition={{ duration: 0.1, easing: 'ease-in-out' }}
+              transition={{ duration: 0.1, ease: 'easeInOut' }}
               className="text-2xl leading-none font-black text-center uppercase tracking-tighter whitespace-nowrap"
             >
               Kelvon Agee
@@ -46,7 +46,7 @@ export function Header() {
             </div>
           </Link>
           <div className="hidden md:block">
-            {isHome && (
+            {isReel && (
               <TextEffect
                 per="word"
                 as="h2"
@@ -61,15 +61,15 @@ export function Header() {
         </div>
         <div className="flex items-center justify-between w-full min-h-8 pt-2 px-2 md:px-4">
           <Link
-            href="/portfolio"
+            href="/reel"
             className={cn(
               'text-sm md:text-2xl font-black flex hover:text-white text-muted-foreground transition-colors',
               {
-                'text-white': isPortfolio,
+                'text-white': isReel,
               }
             )}
           >
-            PORTFOLIO
+            REEL
           </Link>
 
           <Link

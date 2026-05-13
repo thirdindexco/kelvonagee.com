@@ -25,7 +25,7 @@ export function Headshot() {
       }
       transition={{
         duration: 0.8,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
         delay: 0.15,
       }}
     >
