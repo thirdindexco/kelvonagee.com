@@ -1,14 +1,11 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useAtom } from 'jotai/react'
 import { reelPlayerAtom } from '@/state'
 import { TextEffect } from '@/components/ui/text-effect'
 import { cn } from '@/lib/utils'
-
-const SCALE_SMALL = 0.25 // collapsed size ≈ nav text
 
 export function Header() {
   const [{ mode }] = useAtom(reelPlayerAtom)
@@ -17,11 +14,9 @@ export function Header() {
   const isPortfolio = pathname === '/portfolio'
   const isInfo = pathname === '/info'
 
-  // Size is purely route-driven: large on home + info, small on portfolio. The
-  // header persists across navigations, so framer animates the change between
-  // routes. Tagline shows on home only.
-  const targetScale = isPortfolio ? SCALE_SMALL : 1
-
+  // Mobile: the name is always nav-sized (no large state), so it never overlaps
+  // the links. Desktop (md+) is route-driven — large on home/info, small on
+  // portfolio — and the font-size transition animates the change on navigation.
   return (
     <header
       className={cn('fixed top-0 z-30 text-black w-full', {
@@ -52,15 +47,19 @@ export function Header() {
 
         <div className="pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 flex flex-col items-center">
           <Link href="/" className="pointer-events-auto">
-            <motion.span
-              initial={false}
-              animate={{ scale: targetScale }}
-              transition={{ duration: 0.4, ease: [0.25, 0.25, 0, 1] }}
-              style={{ transformOrigin: 'top center' }}
-              className="block leading-none font-black text-center uppercase tracking-tighter whitespace-nowrap text-[clamp(2.75rem,8vw,6rem)] will-change-transform"
+            <span
+              className={cn(
+                'block font-black text-center uppercase tracking-tighter whitespace-nowrap',
+                'transition-[font-size] duration-300 ease-[cubic-bezier(0.25,0.25,0,1)] will-change-[font-size]',
+                'text-sm',
+                isPortfolio
+                  ? 'md:text-2xl'
+                  : 'md:text-[clamp(2.75rem,8vw,6rem)] md:-mt-[0.054em]',
+                'leading-none'
+              )}
             >
               Kelvon Agee
-            </motion.span>
+            </span>
           </Link>
           <TextEffect
             per="word"
@@ -69,7 +68,7 @@ export function Header() {
             speedReveal={3}
             speedSegment={0.6}
             trigger={isHome}
-            className="caption mt-3 md:mt-4 text-center"
+            className="caption mt-2 md:mt-4 text-center"
           >
             Visual Storyteller. EST 1986
           </TextEffect>
