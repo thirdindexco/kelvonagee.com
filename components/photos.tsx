@@ -22,13 +22,18 @@ interface Row {
   height: number
 }
 
-const GAP = 24
-
 function targetRowHeight(containerWidth: number): number {
   if (containerWidth < 640) return 130
   if (containerWidth < 1024) return 190
   if (containerWidth < 1536) return 240
   return 280
+}
+
+// Gutter between thumbnails. Matches the viewport-edge padding on `main`
+// (px-4 md:px-6) so spacing inside the grid equals spacing around it.
+function gridGap(containerWidth: number): number {
+  if (containerWidth < 768) return 16
+  return 24
 }
 
 function buildRows(
@@ -94,9 +99,10 @@ export function Photos() {
     return () => ro.disconnect()
   }, [containerEl])
 
+  const gap = gridGap(containerWidth)
   const rows = useMemo(
-    () => buildRows(images, containerWidth, targetRowHeight(containerWidth), GAP),
-    [images, containerWidth]
+    () => buildRows(images, containerWidth, targetRowHeight(containerWidth), gap),
+    [images, containerWidth, gap]
   )
 
   if (isLoading || error) {
@@ -111,17 +117,14 @@ export function Photos() {
 
   return (
     <>
-      <div
-        ref={setContainerEl}
-        className="px-2 md:px-4"
-      >
+      <div ref={setContainerEl}>
         {rows.map((row, ri) => (
           <div
             key={ri}
             className="flex"
             style={{
-              gap: GAP,
-              marginBottom: ri < rows.length - 1 ? GAP : 0,
+              gap: gap,
+              marginBottom: ri < rows.length - 1 ? gap : 0,
             }}
           >
             {row.items.map((item) => (

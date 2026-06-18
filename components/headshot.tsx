@@ -15,7 +15,7 @@ export function Headshot() {
     <motion.div
       className={cn(
         'relative w-full will-change-transform',
-        'aspect-[5/8] md:h-[calc(100dvh_-_96px_-_1rem)]'
+        'aspect-[5/8] md:h-[calc(100dvh_-_120px_-_1rem)]'
       )}
       initial={{ opacity: 0, scale: 1.2, filter: 'blur(8px)' }}
       animate={

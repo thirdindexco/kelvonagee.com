@@ -48,10 +48,10 @@ const item = {
 
 export default function Info() {
   return (
-    <main className="bg-black text-white pt-[52px] md:pt-[96px]">
+    <main className="bg-black text-white pt-[72px] md:pt-[120px]">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-8">
         {/* Headshot container */}
-        <div className="sm:col-span-4 md:col-span-3 md:h-[calc(100dvh_-_96px_-_1rem)] overflow-hidden order-2 md:order-1">
+        <div className="sm:col-span-4 md:col-span-3 md:h-[calc(100dvh_-_120px_-_1rem)] overflow-hidden order-2 md:order-1">
           <Headshot />
         </div>
 

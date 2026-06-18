@@ -71,7 +71,7 @@ body {
     @apply bg-background text-foreground w-full;
   }
   main {
-    @apply min-h-screen bg-white text-black transition-colors duration-100 px-2 md:px-4 pb-2 md:pb-4;
+    @apply min-h-screen bg-white text-black transition-colors duration-100 px-4 md:px-6 pb-4 md:pb-6;
   }
   p {
     @apply text-sm md:text-base;
