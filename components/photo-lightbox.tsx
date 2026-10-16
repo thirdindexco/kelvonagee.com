@@ -86,25 +86,31 @@ export function PhotoLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm"
+          className="fixed inset-0 z-[55] bg-black/92 backdrop-blur-md"
           onClick={onClose}
           role="dialog"
           aria-modal="true"
           aria-label="Photo viewer"
         >
-          <div className="absolute top-3 right-3 md:top-5 md:right-5 z-10 flex items-center gap-3">
-            <span className="caption text-white/70 tabular-nums">
-              {(index ?? 0) + 1} / {images.length}
+          <div className="absolute top-4 left-5 z-10">
+            <span className="readout tnum text-[var(--ink)]">
+              {String((index ?? 0) + 1).padStart(2, '0')}{' '}
+              <span className="text-[var(--ink-dim)]">
+                / {String(images.length).padStart(2, '0')}
+              </span>
             </span>
+          </div>
+          <div className="absolute top-3.5 right-5 z-10">
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 onClose()
               }}
-              className="p-2 -m-2 text-white/70 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-[var(--ink-dim)] hover:text-[var(--ink)] transition-colors"
               aria-label="Close"
             >
-              <X className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
+              <span className="readout">Close</span>
+              <X className="w-5 h-5" strokeWidth={1.5} />
             </button>
           </div>
 

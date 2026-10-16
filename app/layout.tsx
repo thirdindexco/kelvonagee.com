@@ -1,21 +1,66 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Header } from '@/components/header'
+import { Inconsolata, Saira_Condensed } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const mono = Inconsolata({
   subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const display = Saira_Condensed({
   subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['600', '700', '800'],
+  display: 'swap',
 })
+
+const DESCRIPTION =
+  'Kelvon Agee is a producer, director, and director of photography based in New York and Los Angeles — a 5x Emmy-nominated cinematographer. Browse selected frames on an infinite canvas and watch the reel.'
 
 export const metadata: Metadata = {
-  title: 'Kelvon Agee',
-  description: 'Photographer, Producer, and Director based in NY/LA.',
+  metadataBase: new URL('https://kelvonagee.com'),
+  title: {
+    default: 'Kelvon Agee — Producer, Director, DP',
+    template: '%s · Kelvon Agee',
+  },
+  description: DESCRIPTION,
+  applicationName: 'Kelvon Agee',
+  keywords: [
+    'Kelvon Agee',
+    'cinematographer',
+    'director of photography',
+    'DP',
+    'producer',
+    'director',
+    'documentary',
+    'Deadliest Catch',
+    'Life Below Zero',
+    'New York',
+    'Los Angeles',
+  ],
+  authors: [{ name: 'Kelvon Agee' }],
+  creator: 'Kelvon Agee',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    url: 'https://kelvonagee.com',
+    siteName: 'Kelvon Agee',
+    title: 'Kelvon Agee — Producer, Director, DP',
+    description: DESCRIPTION,
+    images: [{ url: '/hero.jpg', alt: 'Kelvon Agee' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kelvon Agee — Producer, Director, DP',
+    description: DESCRIPTION,
+    images: ['/hero.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
 }
 
 export default function RootLayout({
@@ -24,14 +69,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" style={{ backgroundColor: 'black' }}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
-          <Header />
-          {children}
-        </div>
+    <html lang="en">
+      <body className={`${mono.variable} ${display.variable} font-mono`}>
+        {children}
       </body>
     </html>
   )

@@ -6,12 +6,11 @@ const nextConfig: NextConfig = {
     loaderFile: './lib/cloudinary.ts',
   },
   async redirects() {
+    // Everything lives on the single canvas now.
     return [
-      {
-        source: '/work',
-        destination: '/portfolio',
-        permanent: true,
-      },
+      { source: '/work', destination: '/', permanent: true },
+      { source: '/portfolio', destination: '/', permanent: true },
+      { source: '/info', destination: '/', permanent: true },
     ]
   },
 }
