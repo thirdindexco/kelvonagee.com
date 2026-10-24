@@ -1,17 +1,10 @@
 import type { Metadata } from 'next'
-import { Inconsolata, Saira_Condensed } from 'next/font/google'
+import { Inconsolata } from 'next/font/google'
 import './globals.css'
 
 const mono = Inconsolata({
   subsets: ['latin'],
   variable: '--font-mono',
-  display: 'swap',
-})
-
-const display = Saira_Condensed({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['600', '700', '800'],
   display: 'swap',
 })
 
@@ -70,7 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mono.variable} ${display.variable} font-mono`}>
+      <body className={`${mono.variable} font-mono`}>
         {children}
       </body>
     </html>

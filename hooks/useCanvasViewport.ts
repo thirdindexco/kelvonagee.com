@@ -106,7 +106,11 @@ export function useCanvasViewport({
   )
 
   const fit = useCallback(
-    (opts?: { animate?: boolean; align?: 'center' | 'top' }) => {
+    (opts?: {
+      animate?: boolean
+      align?: 'center' | 'top'
+      zoomFactor?: number
+    }) => {
       const c = containerRef.current
       if (!c || !bounds) return
       const vw = c.clientWidth
@@ -115,7 +119,10 @@ export function useCanvasViewport({
       const bh = Math.max(1, bounds.maxY - bounds.minY)
       const align = opts?.align ?? 'center'
       const pad = Math.min(vw, vh) * 0.07 + 20
-      const s = clamp(Math.min((vw - pad * 2) / bw, (vh - pad * 2) / bh))
+      // zoomFactor > 1 zooms past the fit-everything scale, so only a slice of
+      // the board shows and the rest lives off-screen until you pan or zoom out.
+      const base = Math.min((vw - pad * 2) / bw, (vh - pad * 2) / bh)
+      const s = clamp(base * (opts?.zoomFactor ?? 1))
       const x = (vw - bw * s) / 2 - bounds.minX * s
       const y =
         align === 'top'
