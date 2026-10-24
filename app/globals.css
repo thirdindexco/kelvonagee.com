@@ -44,10 +44,6 @@ body {
   font-feature-settings: 'kern' 1;
 }
 
-.font-display {
-  font-family: var(--font-display), 'Arial Narrow', sans-serif;
-}
-
 .font-mono {
   font-family: var(--font-mono), ui-monospace, Menlo, monospace;
 }

@@ -51,14 +51,14 @@ export function CanvasBoard() {
     onActivate,
   })
 
-  // Fit the board once, top-aligned, as soon as it has real dimensions.
+  // Fit the whole grid, top-aligned, once it has real dimensions.
   useEffect(() => {
     if (didFit.current || !images.length) return
     didFit.current = true
     requestAnimationFrame(() => fit({ animate: false, align: 'top' }))
   }, [images.length, fit])
 
-  // Keep the board framed on resize (no animation — it tracks the layout).
+  // Keep the grid framed on resize (no animation — it tracks the layout).
   useEffect(() => {
     if (!didFit.current) return
     fit({ animate: false, align: 'top' })
@@ -127,7 +127,6 @@ export function CanvasBoard() {
 
       <CanvasHud
         zoom={zoom}
-        count={images.length}
         onZoomIn={api.zoomIn}
         onZoomOut={api.zoomOut}
         onFit={() => fit({ align: 'top' })}

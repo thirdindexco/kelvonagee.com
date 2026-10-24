@@ -21,9 +21,9 @@ const COL_W = 300
 const GAP = 36
 const REEL_RATIO = 16 / 9
 
-// A tidy masonry board in world space: each frame drops into the shortest
+// A tidy masonry grid in world space: each frame drops into the shortest
 // column, so heights stay irregular (contact-sheet feel) with no overlaps. The
-// reel is a double-width banner centered above the board — the title card you
+// reel is a double-width banner centered above the grid — the title card you
 // pan up to find.
 export function layoutNodes(
   images: SourceImage[],
@@ -53,7 +53,6 @@ export function layoutNodes(
   const boardW = cols * COL_W + (cols - 1) * GAP
   const boardH = Math.max(1, ...colH) - GAP
 
-  // Reel banner sits above the board, centered, two columns wide.
   const reelW = COL_W * 2 + GAP
   const reelH = Math.round(reelW / REEL_RATIO)
   const reelY = -(reelH + GAP * 2.5)

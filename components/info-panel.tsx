@@ -106,14 +106,14 @@ export function InfoPanel({
               </nav>
 
               <p className="mt-auto pt-6 text-[10px] tracking-wide text-[var(--ink-faint)]">
-                Built by{' '}
+                website by{' '}
                 <a
                   href="https://thirdindex.co"
                   target="_blank"
                   rel="noreferrer"
                   className="underline-offset-2 transition-colors hover:text-[var(--ink-dim)] hover:underline"
                 >
-                  Third Index
+                  THIRD INDEX
                 </a>
               </p>
             </div>

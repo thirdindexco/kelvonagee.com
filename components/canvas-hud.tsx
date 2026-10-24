@@ -6,12 +6,10 @@ const CONTROLS: [string, string][] = [
   ['Drag', 'move'],
   ['Scroll', 'pan'],
   ['⌘ Scroll', 'zoom'],
-  ['Dbl-click', 'zoom in'],
 ]
 
 export function CanvasHud({
   zoom,
-  count,
   onZoomIn,
   onZoomOut,
   onFit,
@@ -19,7 +17,6 @@ export function CanvasHud({
   onReel,
 }: {
   zoom: number
-  count: number
   onZoomIn: () => void
   onZoomOut: () => void
   onFit: () => void
@@ -45,17 +42,16 @@ export function CanvasHud({
         <HudButton onClick={onInfo}>Info</HudButton>
       </div>
 
-      {/* Bottom-left — the key (desktop gestures; hidden on touch where
-          pinch + drag are discoverable) */}
-      <div className="absolute bottom-[clamp(5.5rem,13vw,10rem)] left-5 hidden sm:block">
-        <div className="mb-2 h-px w-7 bg-[var(--hairline-strong)]" />
-        <dl className="grid grid-cols-[auto_auto] gap-x-3 gap-y-1">
+      {/* Bottom-left — a quiet gesture legend (desktop only; pinch + drag are
+          discoverable on touch) */}
+      <div className="absolute bottom-3 left-5 hidden opacity-55 sm:block">
+        <dl className="grid grid-cols-[auto_auto] gap-x-2.5 gap-y-0.5">
           {CONTROLS.map(([k, v]) => (
             <div key={k} className="contents">
-              <dt className="text-[11px] tracking-wide text-[var(--ink)]">
+              <dt className="text-[10px] tracking-wide text-[var(--ink-dim)]">
                 {k}
               </dt>
-              <dd className="text-[11px] tracking-wide text-[var(--ink-dim)]">
+              <dd className="text-[10px] tracking-wide text-[var(--ink-faint)]">
                 {v}
               </dd>
             </div>
@@ -63,35 +59,50 @@ export function CanvasHud({
         </dl>
       </div>
 
-      {/* Bottom-right — frame count + zoom controls */}
-      <div className="absolute bottom-[clamp(5.5rem,13vw,10rem)] right-5 flex flex-col items-end gap-2.5">
-        <span className="readout">
-          <span className="tnum text-[var(--ink)]">
-            {String(count).padStart(2, '0')}
-          </span>{' '}
-          frames
-        </span>
+      {/* Bottom-right — compact zoom controls, on the baseline */}
+      <div className="absolute bottom-3 right-5 flex items-center gap-2.5">
         <div className="pointer-events-auto flex items-center gap-1">
-          <HudButton onClick={onFit} aria-label="Fit to view" square>
-            <Maximize2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-          </HudButton>
-          <div className="flex items-center overflow-hidden rounded-[2px] border border-[var(--hairline)] bg-[var(--surface)] backdrop-blur">
+          <button
+            onClick={onFit}
+            aria-label="Fit to view"
+            className="flex h-[20px] w-[20px] items-center justify-center rounded-[2px] border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] backdrop-blur transition-colors hover:border-[var(--hairline-strong)] hover:bg-[var(--ink)]/5"
+          >
+            <Maximize2 className="h-3 w-3" strokeWidth={1.75} />
+          </button>
+          <div className="flex h-[20px] items-center overflow-hidden rounded-[2px] border border-[var(--hairline)] bg-[var(--surface)] backdrop-blur">
             <IconBtn onClick={onZoomOut} aria-label="Zoom out">
-              <Minus className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <Minus className="h-3 w-3" strokeWidth={1.75} />
             </IconBtn>
-            <span className="tnum w-12 text-center text-[11px] text-[var(--ink)]">
+            <span className="tnum w-9 text-center text-[10px] text-[var(--ink)]">
               {Math.round(zoom * 100)}%
             </span>
             <IconBtn onClick={onZoomIn} aria-label="Zoom in">
-              <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <Plus className="h-3 w-3" strokeWidth={1.75} />
             </IconBtn>
           </div>
         </div>
       </div>
 
-      {/* The wordmark — pinned, full-bleed, the identity the board sits on */}
-      <h1 className="font-display pointer-events-none absolute inset-x-0 bottom-0 m-0 text-center font-extrabold uppercase leading-[0.78] tracking-[0.01em] text-[var(--ink)] [font-size:clamp(3rem,15.5vw,15rem)]">
-        Kelvon Agee
+      {/* The wordmark — the logo.svg, pinned full-bleed to the bottom. Drawn as
+          a mask so it takes the warm --ink color on the dark field. */}
+      <h1 className="pointer-events-none absolute inset-x-0 bottom-0 m-0 px-4 md:px-6">
+        <span className="sr-only">Kelvon Agee</span>
+        <span
+          aria-hidden
+          className="block w-full"
+          style={{
+            height: 'clamp(2.25rem, 13vw, 10rem)',
+            backgroundColor: 'var(--ink)',
+            WebkitMaskImage: 'url(/logo.svg)',
+            maskImage: 'url(/logo.svg)',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center bottom',
+            maskPosition: 'center bottom',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
+        />
       </h1>
     </div>
   )
@@ -132,7 +143,7 @@ function IconBtn({
     <button
       onClick={onClick}
       {...rest}
-      className="flex h-[26px] w-7 items-center justify-center text-[var(--ink-dim)] transition-colors hover:text-[var(--ink)]"
+      className="flex h-full w-5 items-center justify-center text-[var(--ink-dim)] transition-colors hover:text-[var(--ink)]"
     >
       {children}
     </button>
