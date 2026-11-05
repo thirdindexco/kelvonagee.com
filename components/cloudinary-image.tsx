@@ -12,6 +12,8 @@ interface CloudinaryImageProps {
   sizes?: string
 }
 
+/* Fills its (relatively positioned, aspect-sized) parent. A skeleton shimmer
+   holds the tile while the photo streams in, then the image fades over it. */
 export function CloudinaryImage({
   publicId,
   alt,
@@ -23,19 +25,24 @@ export function CloudinaryImage({
   const [isLoading, setIsLoading] = useState(true)
 
   return (
-    <Image
-      loader={cloudinaryLoader}
-      src={publicId || '/placeholder.svg'}
-      alt={alt}
-      width={width}
-      height={height}
-      sizes={sizes}
-      className={cn(
-        'transition-all duration-300 ease-in-out',
-        isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0',
-        className
+    <>
+      {isLoading && (
+        <span className="skeleton pointer-events-none absolute inset-0" aria-hidden />
       )}
-      onLoadingComplete={() => setIsLoading(false)}
-    />
+      <Image
+        loader={cloudinaryLoader}
+        src={publicId || '/placeholder.svg'}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        className={cn(
+          'absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out',
+          isLoading ? 'opacity-0' : 'opacity-100',
+          className
+        )}
+        onLoadingComplete={() => setIsLoading(false)}
+      />
+    </>
   )
 }

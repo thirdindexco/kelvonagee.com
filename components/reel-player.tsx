@@ -43,7 +43,7 @@ export function ReelPlayer({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22 }}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/92 backdrop-blur-md p-4 md:p-14"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-[var(--paper)]/80 backdrop-blur-xl p-4 md:p-14"
           onClick={onClose}
         >
           <button
@@ -60,7 +60,7 @@ export function ReelPlayer({
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="max-h-[86dvh] w-auto max-w-full outline-none"
+            className="max-h-[86dvh] w-auto max-w-full outline-none shadow-[0_24px_70px_-20px_rgba(11,11,11,0.45)]"
             poster={POSTER}
             src={SRC}
             controls

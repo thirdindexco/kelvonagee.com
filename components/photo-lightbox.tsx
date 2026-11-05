@@ -86,7 +86,7 @@ export function PhotoLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[55] bg-black/92 backdrop-blur-md"
+          className="fixed inset-0 z-[55] bg-[var(--paper)]/80 backdrop-blur-xl"
           onClick={onClose}
           role="dialog"
           aria-modal="true"
@@ -150,7 +150,7 @@ export function PhotoLightbox({
                   sizes="100vw"
                   priority
                   draggable={false}
-                  className="max-h-[90dvh] w-auto h-auto object-contain select-none pointer-events-none"
+                  className="max-h-[90dvh] w-auto h-auto object-contain select-none pointer-events-none shadow-[0_24px_70px_-20px_rgba(11,11,11,0.45)]"
                 />
               </motion.div>
             </AnimatePresence>
@@ -179,7 +179,7 @@ function NavButton({
       aria-label={side === 'left' ? 'Previous photo' : 'Next photo'}
       className={cn(
         'absolute top-1/2 -translate-y-1/2 z-10',
-        'p-3 md:p-4 text-white/60 hover:text-white transition-colors',
+        'p-3 md:p-4 text-[var(--ink)]/40 hover:text-[var(--ink)] transition-colors',
         side === 'left' ? 'left-1 md:left-4' : 'right-1 md:right-4'
       )}
     >

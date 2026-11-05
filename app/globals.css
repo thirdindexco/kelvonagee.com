@@ -2,20 +2,19 @@
 @config '../tailwind.config.ts';
 
 /*
-  Kelvon Agee — infinite canvas portfolio.
-  Monochrome, filmic. The photographs are the only color; everything else is a
-  warm off-white camera-HUD readout on a dark field.
+  Kelvon Agee — a quiet white gallery.
+  Photographs are the only color; everything else is near-black sans on paper.
+  Images flow in columns that scroll with a little inertia; the edge columns
+  bleed off the viewport and pull in on hover.
 */
 
 :root {
-  --canvas: #111312;
-  --ink: #f2f0e9; /* warm off-white */
-  --ink-dim: #8a8c85; /* secondary readout */
-  --ink-faint: rgba(242, 240, 233, 0.32);
-  --hairline: rgba(242, 240, 233, 0.14);
-  --hairline-strong: rgba(242, 240, 233, 0.26);
-  --surface: rgba(17, 19, 18, 0.72); /* glass panels / HUD */
-  --dot: rgba(242, 240, 233, 0.06);
+  --paper: #ffffff;
+  --ink: #0b0b0b;
+  --ink-dim: #767676;
+  --ink-faint: rgba(11, 11, 11, 0.42);
+  --hairline: rgba(11, 11, 11, 0.12);
+  --hairline-strong: rgba(11, 11, 11, 0.24);
   --rec: #e8472e; /* used once, only on the live reel marker */
 }
 
@@ -23,49 +22,72 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background: var(--canvas);
+  background: var(--paper);
   color: var(--ink);
-  overflow: hidden;
-  overscroll-behavior: none;
+  overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
-  font-size: 13px;
-  line-height: 1.5;
+  font-family: var(--font-al), ui-sans-serif, system-ui, -apple-system,
+    sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
   font-feature-settings: 'kern' 1;
 }
 
-.font-mono {
-  font-family: var(--font-mono), ui-monospace, Menlo, monospace;
+/* Tight editorial body — the custom sans wants negative tracking. */
+.tight {
+  letter-spacing: -0.02em;
 }
 
-/* Small uppercase HUD readout — camera on-screen-display vernacular. */
+/* Small uppercase micro-label. */
 .readout {
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .tnum {
   font-variant-numeric: tabular-nums;
 }
 
-/* The dotted field that pans and scales with the canvas. */
-.canvas-surface {
-  background-image: radial-gradient(var(--dot) 1px, transparent 1.4px);
-  background-size: 28px 28px;
-  background-position: 0 0;
+/* Skeleton tile — a quiet shimmer under each frame while it loads, so the
+   grid keeps its shape before any pixels arrive. */
+.skeleton {
+  background: rgba(11, 11, 11, 0.07);
+  overflow: hidden;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(11, 11, 11, 0.09),
+    transparent
+  );
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 a {
@@ -74,51 +96,28 @@ a {
 
 ::selection {
   background: var(--ink);
-  color: var(--canvas);
+  color: var(--paper);
 }
 
-/* Thin, quiet scrollbars for the info panel. */
-.scroll-thin {
-  scrollbar-width: thin;
-  scrollbar-color: var(--hairline-strong) transparent;
-}
-.scroll-thin::-webkit-scrollbar {
-  width: 6px;
-}
-.scroll-thin::-webkit-scrollbar-thumb {
-  background: var(--hairline-strong);
-}
-
-/* Single orchestrated load: frames settle into the board once. */
-@keyframes nodeIn {
+/* Each frame settles in once as it loads. */
+@keyframes frameIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(6px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
-.node-in {
-  animation: nodeIn 0.62s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-
-@keyframes hudIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.hud-in {
-  animation: hudIn 0.8s ease 0.15s both;
+.frame-in {
+  animation: frameIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
