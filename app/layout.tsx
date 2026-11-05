@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { Inconsolata } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const mono = Inconsolata({
-  subsets: ['latin'],
-  variable: '--font-mono',
+const al = localFont({
+  src: '../public/al-book.woff2',
+  variable: '--font-al',
   display: 'swap',
 })
 
@@ -63,7 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mono.variable} font-mono`}>
+      <body className={al.variable}>
         {children}
       </body>
     </html>
