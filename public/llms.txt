@@ -1,6 +1,6 @@
 # Kelvon Agee
 
-> Producer, Director, and Director of Photography based in New York and Los Angeles. A 5x Emmy-nominated cinematographer. The portfolio is presented as a single infinite canvas of selected frames, with a cinematography reel.
+> Producer, Director, and Director of Photography based in New York and Los Angeles. A 5x Emmy-nominated cinematographer. The site is a scrolling gallery of selected frames plus a cinematography reel.
 
 Kelvon Agee has over a decade of experience crafting authentic stories through a cinematic lens. His work spans award-nominated documentaries including Deadliest Catch and Life Below Zero — more than 200 produced and 130 directed hours of prime-time programming — alongside campaigns and branded content for high-profile clients.
 
@@ -10,7 +10,8 @@ Kelvon Agee has over a decade of experience crafting authentic stories through a
 - IMDb: https://www.imdb.com/name/nm5559286/
 
 ## Site
-- Home — infinite canvas of photographs plus the cinematography reel: https://kelvonagee.com
+- Home — gallery of selected frames and the cinematography reel: https://kelvonagee.com
+- Reel (video): https://res.cloudinary.com/dxcvsjlxr/video/upload/f_auto:video,q_auto/Kelvonagee_Reel_t14uxl
 
 ## Credits
 - Site design and build: Third Index (https://thirdindex.co)

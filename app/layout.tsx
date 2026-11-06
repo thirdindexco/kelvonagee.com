@@ -9,7 +9,7 @@ const al = localFont({
 })
 
 const DESCRIPTION =
-  'Kelvon Agee is a producer, director, and director of photography based in New York and Los Angeles — a 5x Emmy-nominated cinematographer. Browse selected frames on an infinite canvas and watch the reel.'
+  'Kelvon Agee is a producer, director, and director of photography based in New York and Los Angeles — a 5x Emmy-nominated cinematographer. Browse selected frames and watch the reel.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kelvonagee.com'),
